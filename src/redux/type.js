@@ -1,3 +1,5 @@
 
 export const ITEMS = "ITEMS"
 export const SUPPLIERS = "SUPPLIERS"
+export const SETACTIVESUPPLIER = "SETACTIVESUPPLIER"
+export const SETACTIVEORDER = "SETACTIVEORDER"

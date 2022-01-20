@@ -1,0 +1,19 @@
+
+
+
+.titleOrder{
+  text-align: right;
+}
+.SummaryDiv{
+  /* margin: 0 0.2em; */
+  padding: 1%;
+  font-size:  1.1em;
+  
+}
+
+.summary2{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+

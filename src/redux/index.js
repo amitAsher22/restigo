@@ -1,32 +1,33 @@
-import {ITEMS , SUPPLIERS} from './type'
+import { ITEMS, SETACTIVESUPPLIER, SUPPLIERS, SETACTIVEORDER } from './type'
 
 const initStateDetails = {
-  
- suppliers : [
+  activeSupplier: {},
+  activeOrder: {},
+  suppliers: [
     {
       "id": "1",
       "name": "אוסם",
       "costumer_number": "2365",
       "min_order": "200",
-      "logo": "https://en.wikipedia.org/wiki/Osem_(company)#/media/File:Osem_Logo.svg"
+      "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Osem_Logo.svg/1920px-Osem_Logo.svg.png"
     },
     {
       "id": "2",
       "name": "החברה המרכזית למשקאות בעמ",
       "costumer_number": "452654",
       "min_order": "300",
-      "logo": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%91%D7%A8%D7%94_%D7%94%D7%9E%D7%A8%D7%9B%D7%96%D7%99%D7%AA_%D7%9C%D7%99%D7%99%D7%A6%D7%95%D7%A8_%D7%9E%D7%A9%D7%A7%D7%90%D7%95%D7%AA_%D7%A7%D7%9C%D7%99%D7%9D#/media/%D7%A7%D7%95%D7%91%D7%A5:Hachevra_Hamerkazit_Clean.svg"
+      "logo": "https://upload.wikimedia.org/wikipedia/he/thumb/a/aa/Hachevra_Hamerkazit_Clean.svg/1920px-Hachevra_Hamerkazit_Clean.svg.png"
     },
     {
       "id": "3",
       "name": "מוצרי איכות אמריקאיים בעמ",
       "costumer_number": "",
       "min_order": "500",
-      "logo": ""
+      "logo": "https://americanqualityhealthproducts.com/themes/panda/img/aqhp.svg"
     }
   ],
 
-  items : [
+  items: [
     {
       "name": "אננס חתוך מוסדי A9",
       "catalog_number": "3101",
@@ -260,19 +261,42 @@ const initStateDetails = {
       "deposit": "0"
     }
   ]
-  
+
+}
+
+export const reducer = (state = initStateDetails, action = {}) => {
+  switch (action.type) {
+    case SETACTIVEORDER:
+      if (!action.payload) {  //if payload is empty reset the active order
+        // this is the place to save in draft object
+        localStorage.setItem(state.activeSupplier.id, state.activeOrder);
+        const getItemFromStorage = JSON.parse(localStorage.getItem(action.payload.supplier_id)) || {}
+        return { ...state, activeOrder: getItemFromStorage };
+      }
+
+      const newProductId = action.payload.catalog_number
+      const productFromState = state.activeOrder[action.payload.catalog_number];
+      const newObj = { ...state.activeOrder }
+
+      if (productFromState) { // if already exist just update the amount
+        const copyOfProductFromState = { ...productFromState };
+        copyOfProductFromState.amount++;
+
+        newObj[newProductId] = copyOfProductFromState
+      } else {
+        // new item
+        const copyOfNewProduct = { ...action.payload, amount: 1 }
+        newObj[newProductId] = copyOfNewProduct; 
+      }
+
+      return { ...state, activeOrder: newObj };
+    case SETACTIVESUPPLIER:
+      return { ...state, activeSupplier: action.payload };
+    case ITEMS:
+      return { ...state, items: action.payload }
+    case SUPPLIERS:
+      return { ...state, suppliers: action.payload }
+    default:
+      return { ...state }
   }
-
-
-  export const reducer = (state = initStateDetails , action = {})=>{
-    switch (action.type) {
-      case ITEMS:
-        return {...state , items:action.payload}
-      case SUPPLIERS:
-        return {...state , suppliers:action.payload }
-      default:
-       return {...state}
-    }
-  }
- 
-
+}
