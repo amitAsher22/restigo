@@ -2,3 +2,7 @@
 svg{
   font-size: 2em;
 }
+
+.groupOfAction{
+  display: flex;
+}
