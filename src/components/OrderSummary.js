@@ -11,17 +11,7 @@ import '../style_Css/summary.css'
 
 
 
-
-
-
-
-
-
-
 function OrderSummary() {
-
-
-
   return (
     <div>
       <div sx={{ boxShadow: 2  }}>
@@ -51,7 +41,7 @@ function OrderSummary() {
         </div>
           </CardContent>
           <CardActions sx={{justifyContent: 'center' }}>
-            <Button sx={{ bgcolor: '#2e7d32', color:'white', padding:'.10em' , width:'50%' }}>לתשלום</Button>
+            <Button sx={{ bgcolor: '#2e7d32', color:'white', padding:'.10em' , width:'50%'  }}>לתשלום</Button>
           </CardActions>
         </Card>
       </div>

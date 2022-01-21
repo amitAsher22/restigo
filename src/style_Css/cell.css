@@ -5,4 +5,11 @@ svg{
 
 .groupOfAction{
   display: flex;
+  justify-content: center;
+}
+
+
+.inputAmount{
+  text-align: center;
+  max-width: 40%;
 }

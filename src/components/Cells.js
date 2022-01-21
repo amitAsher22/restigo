@@ -13,27 +13,29 @@ import { AiOutlineMinusCircle } from 'react-icons/ai';
 import '../style_Css/cell.css'
 
 
-let array = []
+
+
 
 function Cell(props) {
   
   const [counter, setCounter] = useState(0)
-  const [itemsSummary , setItemsSummary] = useState(array)
+  const [itemsSummary , setItemsSummary] = useState([])
   
   
   //// function increase and reduction and changeValue
   const increase = () => {
-    Object.assign(props.row, {"amount": counter+1});
-    setCounter(counter => counter + 1);
-    setItemsSummary( [...itemsSummary , props.row ]) 
-   array.push(props.row)
-   console.log("itemSummary",itemsSummary);
-  }
+      Object.assign(props.row, {"amount": counter+1})
+      setCounter(counter => counter + 1)
+      // setItemsSummary( [...itemsSummary , props.row ])
+      if(itemsSummary.length <= 0 || itemsSummary === []){
+        setItemsSummary( [...itemsSummary , props.row ])
+      }
+      console.log(itemsSummary, "itemsSummary");
+      
+    
+    }
  
-  
 
-  
- 
   const reduction = () => {
     Object.assign(props.row, {"amount": counter-1});
     setCounter(counter => counter - 1)
@@ -55,7 +57,7 @@ function Cell(props) {
       <TableCell align="right">
         <div className='groupOfAction'>
           <AiOutlinePlusCircle onClick={increase} > + </AiOutlinePlusCircle>
-          <input type="number" value={counter} onChange={(e) => changeValueWithInput(e)} />
+          <input className='inputAmount' type="number" value={counter} onChange={(e) => changeValueWithInput(e)} />
           <AiOutlineMinusCircle onClick={reduction}> - </AiOutlineMinusCircle>
         </div>
       </TableCell>
