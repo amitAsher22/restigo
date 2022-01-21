@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 //// redux
 import { connect } from 'react-redux'
+import { draftOrder } from '../redux/action';
 
 //// material ui
 import TableCell from '@mui/material/TableCell';
@@ -9,37 +10,40 @@ import TableRow from '@mui/material/TableRow';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { AiOutlineMinusCircle } from 'react-icons/ai';
 
-/// css from style_Css 
+/// css from style_Css
 import '../style_Css/cell.css'
 
 
 
 
 
+
 function Cell(props) {
-  
   const [counter, setCounter] = useState(0)
-  const [itemsSummary , setItemsSummary] = useState([])
-  
-  
+  const [itemsSummary , setItemsSummary] = useState([]);
+  const [itemRow, setItemRow] = useState(props.row)/// {...data}
+
+
   //// function increase and reduction and changeValue
+
   const increase = () => {
-      Object.assign(props.row, {"amount": counter+1})
-      setCounter(counter => counter + 1)
-      // setItemsSummary( [...itemsSummary , props.row ])
-      if(itemsSummary.length <= 0 || itemsSummary === []){
-        setItemsSummary( [...itemsSummary , props.row ])
-      }
-      console.log(itemsSummary, "itemsSummary");
-      
-    
-    }
- 
+    itemRow.amount = itemRow.amount ? itemRow.amount + 1 : 1;
+    setCounter(itemRow.amount);
+    setItemRow( {...itemRow} );
+    itemsSummary[0] = itemRow
+    setItemsSummary([...itemsSummary])
+    console.log('itemsSummary', itemsSummary);
+    props.draftOrder(itemsSummary) //// redux
+  }
+
 
   const reduction = () => {
-    Object.assign(props.row, {"amount": counter-1});
-    setCounter(counter => counter - 1)
-    console.log("itemSummary",itemsSummary);
+    itemRow.amount = itemRow.amount ? itemRow.amount - 1 : 1
+    setCounter(itemRow.amount)
+    setItemsSummary({...itemRow})
+    itemsSummary[0]= itemRow
+    setItemsSummary(itemsSummary)
+    // console.log('itemsSummary', itemsSummary);
   }
 
   const changeValueWithInput = (event) => {
@@ -66,15 +70,21 @@ function Cell(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
 
-  return {
+const mapStateToProps = (state)=>{
+  // console.log(state.draftOrders);
+  return{
 
   }
 }
 
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    draftOrder : (orderItem) => dispatch(draftOrder(orderItem))
+  }
+}
 
-export default connect(null, mapDispatchToProps)(Cell);
 
 
+export default connect(mapStateToProps, mapDispatchToProps)(Cell);

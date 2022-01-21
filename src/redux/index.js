@@ -1,6 +1,7 @@
-import { ITEMS, SETACTIVESUPPLIER, SUPPLIERS, SETACTIVEORDER } from './type'
+import { ITEMS, SETACTIVESUPPLIER, SUPPLIERS, SETACTIVEORDER ,DRAPTORDERS } from './type'
 
 const initStateDetails = {
+  draftOrders:[],
   activeSupplier: {},
   activeOrder: {},
   suppliers: [
@@ -266,6 +267,8 @@ const initStateDetails = {
 
 export const reducer = (state = initStateDetails, action = {}) => {
   switch (action.type) {
+    case DRAPTORDERS:
+      return{...state , draftOrders:action.payload  }
     case SETACTIVEORDER:
       if (!action.payload) {  //if payload is empty reset the active order
         // this is the place to save in draft object

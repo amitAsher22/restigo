@@ -1,4 +1,4 @@
-import { SETACTIVESUPPLIER ,SETACTIVEORDER } from './type'
+import { SETACTIVESUPPLIER ,SETACTIVEORDER ,DRAPTORDERS } from './type'
 
 export const setSuppliers = (supplier) => {
   return {
@@ -11,5 +11,12 @@ export const setActiveOrder = (data) => {
   return {
     type: SETACTIVEORDER,
     payload: data
+  }
+}
+
+export const draftOrder = (order)=>{
+  return{
+    type:DRAPTORDERS,
+    payload:order
   }
 }
