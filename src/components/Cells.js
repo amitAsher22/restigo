@@ -20,11 +20,12 @@ function Cell(props) {
   const [counter, setCounter] = useState(0)
   const [itemsSummary , setItemsSummary] = useState(array)
   
+  
   //// function increase and reduction and changeValue
   const increase = () => {
+    Object.assign(props.row, {"amount": counter+1});
     setCounter(counter => counter + 1);
-    // console.log(props.row);
-    setItemsSummary( [...itemsSummary , props.row]) 
+    setItemsSummary( [...itemsSummary , props.row ]) 
    array.push(props.row)
    console.log("itemSummary",itemsSummary);
   }
@@ -34,7 +35,9 @@ function Cell(props) {
   
  
   const reduction = () => {
+    Object.assign(props.row, {"amount": counter-1});
     setCounter(counter => counter - 1)
+    console.log("itemSummary",itemsSummary);
   }
 
   const changeValueWithInput = (event) => {
